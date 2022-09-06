@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.TextArea = new System.Windows.Forms.RichTextBox();
@@ -38,7 +39,7 @@
             this.SaveCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.CloseFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteFile = new System.Windows.Forms.ToolStripMenuItem();
             this.QuitApp = new System.Windows.Forms.ToolStripMenuItem();
             this.Edit_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.CopySelection = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,7 @@
             this.StrikeThrough = new System.Windows.Forms.ToolStripMenuItem();
             this.Upper = new System.Windows.Forms.ToolStripMenuItem();
             this.Lower = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.Align_DropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.AlignLeft = new System.Windows.Forms.ToolStripMenuItem();
             this.AlignRight = new System.Windows.Forms.ToolStripMenuItem();
             this.AlignCenter = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,11 @@
             this.UndoActions = new System.Windows.Forms.ToolStripButton();
             this.RedoActions = new System.Windows.Forms.ToolStripButton();
             this.HelpButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.FileSaved = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.OpenedDocument = new System.Windows.Forms.Label();
+            this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,14 +80,16 @@
             // 
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.89335F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.10665F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 96.5F));
             this.tableLayoutPanel1.Controls.Add(this.TextArea, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.OpenedDocument, 1, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 347);
             this.tableLayoutPanel1.TabIndex = 2;
@@ -90,17 +98,19 @@
             // 
             this.TextArea.AcceptsTab = true;
             this.TextArea.AutoWordSelection = true;
-            this.TextArea.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.TextArea.BackColor = System.Drawing.SystemColors.Window;
             this.TextArea.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TextArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TextArea.EnableAutoDragDrop = true;
-            this.TextArea.ForeColor = System.Drawing.SystemColors.Menu;
-            this.TextArea.Location = new System.Drawing.Point(42, 3);
+            this.TextArea.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.TextArea.Location = new System.Drawing.Point(31, 3);
             this.TextArea.Name = "TextArea";
-            this.TextArea.Size = new System.Drawing.Size(755, 341);
+            this.TextArea.Size = new System.Drawing.Size(766, 321);
             this.TextArea.TabIndex = 6;
             this.TextArea.Text = "";
             this.TextArea.WordWrap = false;
+            this.TextArea.FontChanged += new System.EventHandler(this.TextArea_TextChanged);
+            this.TextArea.TextChanged += new System.EventHandler(this.TextArea_TextChanged);
             // 
             // toolStrip1
             // 
@@ -114,16 +124,19 @@
             this.File_DropDown,
             this.Edit_DropDown,
             this.Format_DropDown,
-            this.toolStripDropDownButton1,
+            this.Align_DropDown,
             this.TextFormat,
             this.UndoActions,
             this.RedoActions,
-            this.HelpButton});
+            this.HelpButton,
+            this.toolStripSeparator1,
+            this.FileSaved,
+            this.toolStripSeparator3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(39, 347);
+            this.toolStrip1.Size = new System.Drawing.Size(27, 327);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
@@ -138,14 +151,14 @@
             this.SaveCurrent,
             this.SaveAs,
             this.CloseFile,
-            this.toolStripMenuItem1,
+            this.DeleteFile,
             this.QuitApp});
             this.File_DropDown.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.File_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("File_DropDown.Image")));
             this.File_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.File_DropDown.Name = "File_DropDown";
             this.File_DropDown.ShowDropDownArrow = false;
-            this.File_DropDown.Size = new System.Drawing.Size(38, 20);
+            this.File_DropDown.Size = new System.Drawing.Size(26, 20);
             this.File_DropDown.Text = "File";
             this.File_DropDown.ToolTipText = "File";
             // 
@@ -157,7 +170,7 @@
             this.NewFile.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.NewFile.Image = ((System.Drawing.Image)(resources.GetObject("NewFile.Image")));
             this.NewFile.Name = "NewFile";
-            this.NewFile.Size = new System.Drawing.Size(180, 22);
+            this.NewFile.Size = new System.Drawing.Size(147, 22);
             this.NewFile.Text = "New...";
             this.NewFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.NewFile.ToolTipText = "Creates a new text file";
@@ -171,10 +184,11 @@
             this.OpenFile.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.OpenFile.Image = ((System.Drawing.Image)(resources.GetObject("OpenFile.Image")));
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.OpenFile.Size = new System.Drawing.Size(147, 22);
             this.OpenFile.Text = "Open...";
             this.OpenFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.OpenFile.ToolTipText = "Opens a rich text file";
+            this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
             // 
             // SaveCurrent
             // 
@@ -184,10 +198,12 @@
             this.SaveCurrent.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.SaveCurrent.Image = ((System.Drawing.Image)(resources.GetObject("SaveCurrent.Image")));
             this.SaveCurrent.Name = "SaveCurrent";
-            this.SaveCurrent.Size = new System.Drawing.Size(180, 22);
+            this.SaveCurrent.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.SaveCurrent.Size = new System.Drawing.Size(147, 22);
             this.SaveCurrent.Text = "Save...";
             this.SaveCurrent.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.SaveCurrent.ToolTipText = "Overwrites the currently openned file";
+            this.SaveCurrent.ToolTipText = "Save the opened file";
+            this.SaveCurrent.Click += new System.EventHandler(this.SaveCurrent_Click);
             // 
             // SaveAs
             // 
@@ -197,7 +213,7 @@
             this.SaveAs.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.SaveAs.Image = ((System.Drawing.Image)(resources.GetObject("SaveAs.Image")));
             this.SaveAs.Name = "SaveAs";
-            this.SaveAs.Size = new System.Drawing.Size(180, 22);
+            this.SaveAs.Size = new System.Drawing.Size(147, 22);
             this.SaveAs.Text = "Save as...";
             this.SaveAs.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.SaveAs.ToolTipText = "Saves the current file under a new name";
@@ -210,24 +226,25 @@
             this.CloseFile.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.CloseFile.Image = ((System.Drawing.Image)(resources.GetObject("CloseFile.Image")));
             this.CloseFile.Name = "CloseFile";
-            this.CloseFile.Size = new System.Drawing.Size(180, 22);
+            this.CloseFile.Size = new System.Drawing.Size(147, 22);
             this.CloseFile.Text = "Close file";
             this.CloseFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.CloseFile.ToolTipText = "Close the opened file";
             this.CloseFile.Click += new System.EventHandler(this.CloseFile_Click);
             // 
-            // toolStripMenuItem1
+            // DeleteFile
             // 
-            this.toolStripMenuItem1.AutoToolTip = true;
-            this.toolStripMenuItem1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripMenuItem1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem1.Text = "Delete file";
-            this.toolStripMenuItem1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripMenuItem1.ToolTipText = "Delete the currently opened file (PROGRESS WILL BE LOST)";
+            this.DeleteFile.AutoToolTip = true;
+            this.DeleteFile.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.DeleteFile.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.DeleteFile.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.DeleteFile.Image = ((System.Drawing.Image)(resources.GetObject("DeleteFile.Image")));
+            this.DeleteFile.Name = "DeleteFile";
+            this.DeleteFile.Size = new System.Drawing.Size(147, 22);
+            this.DeleteFile.Text = "Delete file";
+            this.DeleteFile.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.DeleteFile.ToolTipText = "Delete the currently opened file (PROGRESS WILL BE LOST)";
+            this.DeleteFile.Click += new System.EventHandler(this.DeleteFile_Click);
             // 
             // QuitApp
             // 
@@ -237,10 +254,11 @@
             this.QuitApp.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.QuitApp.Image = ((System.Drawing.Image)(resources.GetObject("QuitApp.Image")));
             this.QuitApp.Name = "QuitApp";
-            this.QuitApp.Size = new System.Drawing.Size(180, 22);
+            this.QuitApp.Size = new System.Drawing.Size(147, 22);
             this.QuitApp.Text = "Quit";
             this.QuitApp.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.QuitApp.ToolTipText = "Quit the application";
+            this.QuitApp.Click += new System.EventHandler(this.QuitApp_Click);
             // 
             // Edit_DropDown
             // 
@@ -255,7 +273,7 @@
             this.Edit_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Edit_DropDown.Name = "Edit_DropDown";
             this.Edit_DropDown.ShowDropDownArrow = false;
-            this.Edit_DropDown.Size = new System.Drawing.Size(38, 20);
+            this.Edit_DropDown.Size = new System.Drawing.Size(26, 20);
             this.Edit_DropDown.Text = "Edit";
             // 
             // CopySelection
@@ -316,7 +334,7 @@
             this.Format_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Format_DropDown.Name = "Format_DropDown";
             this.Format_DropDown.ShowDropDownArrow = false;
-            this.Format_DropDown.Size = new System.Drawing.Size(38, 20);
+            this.Format_DropDown.Size = new System.Drawing.Size(26, 20);
             this.Format_DropDown.Text = "Format";
             // 
             // Bold
@@ -403,22 +421,22 @@
             this.Lower.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.Lower.ToolTipText = "Lower cases the selection";
             // 
-            // toolStripDropDownButton1
+            // Align_DropDown
             // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Align_DropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Align_DropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AlignLeft,
             this.AlignRight,
             this.AlignCenter,
             this.AlignJustify});
-            this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.ShowDropDownArrow = false;
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(38, 20);
-            this.toolStripDropDownButton1.Text = "Alignement";
-            this.toolStripDropDownButton1.ToolTipText = "Text alignements";
+            this.Align_DropDown.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Align_DropDown.Image = ((System.Drawing.Image)(resources.GetObject("Align_DropDown.Image")));
+            this.Align_DropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Align_DropDown.Name = "Align_DropDown";
+            this.Align_DropDown.ShowDropDownArrow = false;
+            this.Align_DropDown.Size = new System.Drawing.Size(26, 20);
+            this.Align_DropDown.Text = "Alignement";
+            this.Align_DropDown.ToolTipText = "Text alignements";
             // 
             // AlignLeft
             // 
@@ -488,7 +506,7 @@
             this.TextFormat.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TextFormat.Name = "TextFormat";
             this.TextFormat.ShowDropDownArrow = false;
-            this.TextFormat.Size = new System.Drawing.Size(38, 20);
+            this.TextFormat.Size = new System.Drawing.Size(26, 20);
             this.TextFormat.Text = "Alignement";
             this.TextFormat.ToolTipText = "Text alignements";
             // 
@@ -569,7 +587,7 @@
             this.UndoActions.Image = ((System.Drawing.Image)(resources.GetObject("UndoActions.Image")));
             this.UndoActions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.UndoActions.Name = "UndoActions";
-            this.UndoActions.Size = new System.Drawing.Size(38, 20);
+            this.UndoActions.Size = new System.Drawing.Size(26, 20);
             this.UndoActions.Text = "Undo";
             this.UndoActions.ToolTipText = "Undo your last actions";
             // 
@@ -579,7 +597,7 @@
             this.RedoActions.Image = ((System.Drawing.Image)(resources.GetObject("RedoActions.Image")));
             this.RedoActions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RedoActions.Name = "RedoActions";
-            this.RedoActions.Size = new System.Drawing.Size(38, 20);
+            this.RedoActions.Size = new System.Drawing.Size(26, 20);
             this.RedoActions.Text = "Redo";
             this.RedoActions.ToolTipText = "Redo your last changes";
             // 
@@ -590,9 +608,47 @@
             this.HelpButton.Image = ((System.Drawing.Image)(resources.GetObject("HelpButton.Image")));
             this.HelpButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.HelpButton.Name = "HelpButton";
-            this.HelpButton.Size = new System.Drawing.Size(38, 20);
+            this.HelpButton.Size = new System.Drawing.Size(26, 20);
             this.HelpButton.Text = "Help";
             this.HelpButton.ToolTipText = "Displays informations and help about this application";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(26, 6);
+            // 
+            // FileSaved
+            // 
+            this.FileSaved.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FileSaved.Image = ((System.Drawing.Image)(resources.GetObject("FileSaved.Image")));
+            this.FileSaved.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FileSaved.Name = "FileSaved";
+            this.FileSaved.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.FileSaved.Size = new System.Drawing.Size(26, 20);
+            this.FileSaved.Text = "FileSaved";
+            this.FileSaved.ToolTipText = "Please use:\r\nCtrl+S\r\nTo save your file.\r\n\r\nThis displays if your file has unsaved" +
+    " changes.";
+            this.FileSaved.Click += new System.EventHandler(this.SaveCurrent_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(26, 6);
+            // 
+            // OpenedDocument
+            // 
+            this.OpenedDocument.AutoSize = true;
+            this.OpenedDocument.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.OpenedDocument.Location = new System.Drawing.Point(31, 327);
+            this.OpenedDocument.Name = "OpenedDocument";
+            this.OpenedDocument.Size = new System.Drawing.Size(41, 13);
+            this.OpenedDocument.TabIndex = 7;
+            this.OpenedDocument.Text = "untitled";
+            // 
+            // UpdateTimer
+            // 
+            this.UpdateTimer.Enabled = true;
+            this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimer_Tick);
             // 
             // Form1
             // 
@@ -600,11 +656,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(798, 345);
+            this.ClientSize = new System.Drawing.Size(798, 348);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "BRS Text Editor";
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -622,7 +679,7 @@
         private System.Windows.Forms.ToolStripMenuItem SaveCurrent;
         private System.Windows.Forms.ToolStripMenuItem SaveAs;
         private System.Windows.Forms.ToolStripMenuItem CloseFile;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem DeleteFile;
         private System.Windows.Forms.ToolStripMenuItem QuitApp;
         private System.Windows.Forms.ToolStripDropDownButton Edit_DropDown;
         private System.Windows.Forms.ToolStripMenuItem CopySelection;
@@ -635,7 +692,7 @@
         private System.Windows.Forms.ToolStripMenuItem StrikeThrough;
         private System.Windows.Forms.ToolStripMenuItem Upper;
         private System.Windows.Forms.ToolStripMenuItem Lower;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton Align_DropDown;
         private System.Windows.Forms.ToolStripMenuItem AlignLeft;
         private System.Windows.Forms.ToolStripMenuItem AlignRight;
         private System.Windows.Forms.ToolStripMenuItem AlignCenter;
@@ -650,6 +707,11 @@
         private System.Windows.Forms.ToolStripButton UndoActions;
         private System.Windows.Forms.ToolStripButton RedoActions;
         private System.Windows.Forms.ToolStripButton HelpButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton FileSaved;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.Label OpenedDocument;
+        private System.Windows.Forms.Timer UpdateTimer;
     }
 }
 
